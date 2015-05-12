@@ -18,27 +18,6 @@ use Thirteen\Imagick\Imagick;
  */
 class ImagickTest extends PHPUnit_Framework_TestCase
 {
-
-    /**
-     * it fetches all the methods from imagick
-     *
-     * @test
-     * @return void
-     */
-    public function it_fetches_all_the_methods_from_imagick()
-    {
-        $class   = new ReflectionClass(Imagick::class);
-        $imagick = Imagick::open(__DIR__ . '/image.jpg');
-
-        $method = $class->getMethod('getNativeMethods');
-        $method->setAccessible(true);
-
-        $actual = $method->invoke($imagick);
-
-        $this->assertNotNull($actual);
-    }
-
-
     /**
      * it dynamically calls the methods and returns itself
      *
@@ -47,9 +26,29 @@ class ImagickTest extends PHPUnit_Framework_TestCase
      */
     public function it_dynamically_calls_the_methods_and_returns_itself()
     {
-        $imagick = Imagick::open(__DIR__ . '/image.jpg');
+        $imagick = new Imagick(__DIR__ . '/image.jpg');
 
-        $actual = $imagick->despeckleImage();
+        $actual = $imagick
+            ->gammaImage(true)
+            ->despeckleImage();
+
+        $this->assertInstanceOf('Thirteen\Imagick\Imagick', $actual);
+    }
+
+
+    /**
+     * it can call methods even without the suffix
+     *
+     * @test
+     * @return void
+     */
+    public function it_can_call_methods_even_without_the_suffix()
+    {
+        $imagick = new Imagick(__DIR__ . '/image.jpg');
+
+        $actual = $imagick
+            ->gamma(true)
+            ->despeckle();
 
         $this->assertInstanceOf('Thirteen\Imagick\Imagick', $actual);
     }

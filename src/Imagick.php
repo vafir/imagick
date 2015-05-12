@@ -30,36 +30,12 @@ class Imagick
     /**
      * Create a new Imagick instance.
      *
-     * @param  Imagemagick  $imagick
+     * @param  string  $file
      * @return Imagick
      */
-    private function __construct(Imagemagick $imagick)
+    public function __construct($file)
     {
-        $this->imagick = $imagick;
-    }
-
-
-    /**
-     * Create a new instance.
-     *
-     * @static
-     * @param  string  $file
-     * @return Imagemagick
-     */
-    public static function open($file)
-    {
-        return new Imagick(new Imagemagick($file));
-    }
-
-
-    /**
-     * Get the native image magick methods.
-     *
-     * @return array
-     */
-    protected function getNativeMethods()
-    {
-        return get_class_methods(Imagemagick::class);
+        $this->imagick = new Imagemagick($file);
     }
 
 
@@ -72,6 +48,15 @@ class Imagick
      */
     public function __call($name, array $parameters = [])
     {
+        $method   = $name;
+        $suffixed = $name . 'Image';
+
+        if (method_exists($this->imagick, $suffixed)) {
+            $method = $suffixed;
+        }
+
+        call_user_func_array([$this->imagick, $method], $parameters);
+
         return $this;
     }
 }
