@@ -1,0 +1,20 @@
+{
+    "name": "thirteen/imagick",
+    "description": "Imagick fluent interface wrapper.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jaggy Gauran",
+            "email": "poke@jag.gy"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Thirteen\\Imagick\\": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
+    }
+}
