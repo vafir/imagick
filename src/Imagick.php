@@ -13,7 +13,7 @@ use Imagick as Imagemagick;
  * @package     Thirteen\Imagick
  * @author      Jaggy Gauran <jaggygauran@gmail.com>
  * @license     http://opensource.org/licenses/MIT The MIT License (MIT)
- * @version     Release: 0.1.1
+ * @version     Release: 0.1.2
  * @link        http://github.com/thirteen/imagick
  * @since       Class available since Release 0.1.0
  */
@@ -33,9 +33,23 @@ class Imagick
      * @param  string  $file
      * @return Imagick
      */
-    public function __construct($file)
+    public function __construct($file = null)
     {
-        $this->imagick = new Imagemagick($file);
+        if ($file) {
+            $this->imagick = new Imagemagick($file);
+        }
+    }
+
+
+    /**
+     * Set the image to parse.
+     *
+     * @param  string  $file
+     * @return Imagick
+     */
+    public function load($file)
+    {
+        return new self($file);
     }
 
 
