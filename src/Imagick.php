@@ -69,8 +69,6 @@ class Imagick
             $method = $suffixed;
         }
 
-        call_user_func_array([$this->imagick, $method], $parameters);
-
-        return $this;
+        return call_user_func_array([$this->imagick, $method], $parameters);
     }
 }
